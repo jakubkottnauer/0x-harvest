@@ -1,6 +1,6 @@
 import { Button, Col, Row, Space, Typography } from "antd";
 import classnames from "classnames";
-import moment from "moment";
+import dayjs from "dayjs";
 import type { GetServerSideProps, NextPage } from "next";
 import { useMemo, useState } from "react";
 import { useSWRConfig } from "swr";
@@ -36,19 +36,19 @@ export default Home;
 const TimeEntries = () => {
   const { mutate } = useSWRConfig();
   const primaryTask = usePrimaryTask();
-  const [currentYear, setCurrentYear] = useState(moment().year());
-  const [currentMonth, setCurrentMonth] = useState(moment().month());
+  const [currentYear, setCurrentYear] = useState(dayjs().year());
+  const [currentMonth, setCurrentMonth] = useState(dayjs().month());
 
   const currentDate = useMemo(
-    () => moment(new Date(currentYear, currentMonth, 1)),
+    () => dayjs(new Date(currentYear, currentMonth, 1)),
     [currentYear, currentMonth]
   );
 
   const formattedDate = currentDate.format("MMMM YYYY");
 
   const { data: entries, cacheKey } = useTimeEntries(
-    currentDate.clone().startOf("month"),
-    currentDate.clone().endOf("month")
+    currentDate.startOf("month"),
+    currentDate.endOf("month")
   );
 
   const setEntries = (
@@ -87,13 +87,13 @@ const TimeEntries = () => {
       />
       <Typography.Title level={4}>
         {formattedDate}{" "}
-        {(moment().year() !== currentYear ||
-          moment().month() !== currentMonth) && (
+        {(dayjs().year() !== currentYear ||
+            dayjs().month() !== currentMonth) && (
           <Button
             type="link"
             onClick={() => {
-              setCurrentYear(moment().year());
-              setCurrentMonth(moment().month());
+              setCurrentYear(dayjs().year());
+              setCurrentMonth(dayjs().month());
             }}
           >
             go to current month
@@ -283,7 +283,7 @@ const TimeEntryRow = ({
             days={Array(5)
               .fill(1)
               .map((_, idx) => {
-                const current = day.date.clone().add(idx, "day");
+                const current = day.date.add(idx, "day");
                 const notInThisMonth = current.month() !== day.date.month();
                 const hasTimeEntry = entries.some(
                   (e) => e.spent_date === current.format(HARVEST_DATE_FORMAT)
@@ -293,7 +293,7 @@ const TimeEntryRow = ({
                 }
                 return current;
               })
-              .filter((d): d is moment.Moment => !!d)}
+              .filter((d): d is dayjs.Dayjs => !!d)}
             loading={loading}
             setLoading={setLoading}
             task={primaryTask}

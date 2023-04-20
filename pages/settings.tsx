@@ -1,7 +1,7 @@
 import React from "react";
-import moment from "moment";
 import { Card, Col, Form, InputNumber, Row, Select } from "antd";
 import type { GetServerSideProps, NextPage } from "next";
+import dayjs from "dayjs";
 import {
   DEFAULT_VACATION_ALLOWANCE,
   getVacationAllowance,
@@ -34,7 +34,7 @@ const Settings: NextPage = () => {
 };
 
 const VacationAllowanceCard = () => {
-  const thisYear = moment().year();
+  const thisYear = dayjs().year();
   const years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1];
 
   const [vacationAllowance, setVacationAllowance] = React.useState(() => {

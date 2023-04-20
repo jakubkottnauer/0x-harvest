@@ -43,10 +43,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         const respText = await resp.text();
         res.status(resp.status).json(respText);
       }
-
-      return;
     } else {
-      return res.status(401).end();
+      res.status(401).end();
     }
   });
 }

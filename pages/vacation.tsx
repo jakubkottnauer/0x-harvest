@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
-import moment from "moment";
+import dayjs from "dayjs";
 import { useState } from "react";
 import Link from "next/link";
 import { Alert, Button, Col, List, Row, Statistic, Typography } from "antd";
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 
 const Vacation: NextPage = () => {
   const router = useRouter();
-  let year = moment().year();
+  let year = dayjs().year();
 
   if (typeof router.query.year === "string") {
     const parsed = parseInt(router.query.year);
@@ -33,20 +33,20 @@ const Vacation: NextPage = () => {
     }
   }
   const { data: paidVacationEntries } = useTimeEntries(
-    moment().set("year", year).startOf("year"),
-    moment().set("year", year).endOf("year"),
+    dayjs().set("year", year).startOf("year"),
+    dayjs().set("year", year).endOf("year"),
     PAID_VACATION_TASK_ID
   );
 
   const { data: vacationEntries } = useTimeEntries(
-    moment().set("year", year).startOf("year"),
-    moment().set("year", year).endOf("year"),
+    dayjs().set("year", year).startOf("year"),
+    dayjs().set("year", year).endOf("year"),
     VACATION_TASK_ID
   );
 
   const { data: unpaidVacationEntries } = useTimeEntries(
-    moment().set("year", year).startOf("year"),
-    moment().set("year", year).endOf("year"),
+    dayjs().set("year", year).startOf("year"),
+    dayjs().set("year", year).endOf("year"),
     UNPAID_VACATION_TASK_ID
   );
 
@@ -85,11 +85,11 @@ const Vacation: NextPage = () => {
       <Typography.Title level={4}>
         Year {year}{" "}
         <>
-          {moment().year() !== year && (
+          {dayjs().year() !== year && (
             <Button
               type="link"
               onClick={() => {
-                router.push(`/vacation?year=${moment().year()}`, undefined, {
+                router.push(`/vacation?year=${dayjs().year()}`, undefined, {
                   shallow: true,
                 });
               }}

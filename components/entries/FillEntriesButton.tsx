@@ -1,7 +1,7 @@
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, message } from "antd";
 import { ButtonType } from "antd/lib/button";
-import moment from "moment";
+import dayjs from "dayjs";
 import { createTimeEntry, HARVEST_DATE_FORMAT } from "../../lib/api";
 import { TaskWithProject, TimeEntry } from "../../types";
 
@@ -15,7 +15,7 @@ const FillEntriesButton = ({
   label,
   type,
 }: {
-  days: moment.Moment[];
+  days: dayjs.Dayjs[];
   loading: boolean;
   setLoading: (value: boolean) => void;
   task: TaskWithProject;

@@ -1,5 +1,6 @@
 import { LikeOutlined } from "@ant-design/icons";
 import { Statistic } from "antd";
+import dayjs  from "dayjs";
 import { TimeEntry } from "../../types";
 import { weekdaysInMonth } from "../../utils";
 
@@ -7,7 +8,7 @@ const LoggedHoursStatistic = ({
   date,
   entries,
 }: {
-  date: moment.Moment;
+  date: dayjs.Dayjs;
   entries?: TimeEntry[];
 }) => {
   const hoursInMonth = weekdaysInMonth(date.year(), date.month()) * 8;

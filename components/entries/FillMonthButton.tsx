@@ -1,4 +1,4 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { TimeEntry } from "../../types";
 import { usePrimaryTask } from "../../utils";
@@ -9,7 +9,7 @@ const FillMonthButton = ({
   loadMonth,
   onCreatedEntries,
 }: {
-  days: moment.Moment[];
+  days: dayjs.Dayjs[];
   loadMonth: () => Promise<void>;
   onCreatedEntries: (entries: TimeEntry[]) => void;
 }) => {
